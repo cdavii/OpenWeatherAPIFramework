@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WeatherDTO{
 
 	@JsonProperty("coord")
-	@JsonIgnore
 	private Coord coord;
 
 	@JsonProperty("weather")
@@ -64,7 +63,6 @@ public class WeatherDTO{
 	private String name;
 
 	@JsonProperty("cod")
-	@JsonIgnore
 	private Integer cod;
 
 	@JsonProperty("message")
