@@ -10,11 +10,11 @@ public class ConnectionManager {
 
     private final static String API_KEY = Config.getApiKey();
     private final static String END_POINT = "&appid=" + API_KEY;
-    private final static String BASE_URL = "api.openweathermap.org/data/2.5/weather?";
+    private final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
     private static String query= "q=";
-    private static String cityNameQuery, stateCodeQuery, countryCodeQuery;
+    private static String cityNameQuery="", stateCodeQuery="", countryCodeQuery="";
     private static double latitude, longitude;
-    private static String completeUrl = BASE_URL;
+    private static String completeUrl;
 
     public static int getStatusCode(){
         return getConnectionResponse().statusCode();
@@ -22,6 +22,7 @@ public class ConnectionManager {
 
     public static String getConnection(){
         completeUrl = BASE_URL + query + cityNameQuery + stateCodeQuery + countryCodeQuery + END_POINT;
+        System.out.println(completeUrl);
         getConnectionResponse();
         return completeUrl;
         //return getConnectionResponse().uri().toString();
