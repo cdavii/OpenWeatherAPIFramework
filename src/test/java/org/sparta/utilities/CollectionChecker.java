@@ -7,20 +7,23 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 
 public class CollectionChecker {
 
     public boolean containsDuplicates(Collection<Object> collection){
-        
-        for (Object o : collection) {
-            collection.remove(o);
-            if(collection.contains(o)) {
+        Collection<Object> newCollection = new ArrayList<>(collection);
+
+        for (Object o : newCollection) {
+            newCollection.remove(o);
+            if(newCollection.contains(o)) {
                 return true;
             }
         }
          return false;
     }
-    
+
     @Nested
     @DisplayName("CollectionChecker") 
     public class CollectionCheckerTests{
