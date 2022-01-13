@@ -15,7 +15,7 @@ public class ValueConverter {
     }
 
     public static Double degreesFToC(Double fahrenheit) {
-        return (fahrenheit - 32.0) * 5.9;
+        return (fahrenheit - 32.0) * 5/9;
     }
 
     public static Double degreesFtoK(Double fahrenheit) {
