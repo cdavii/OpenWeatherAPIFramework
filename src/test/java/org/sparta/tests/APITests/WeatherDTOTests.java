@@ -1,6 +1,7 @@
 package org.sparta.tests.APITests;
 
 import org.junit.jupiter.api.*;
+import org.sparta.ConnectionManager;
 import org.sparta.Injector;
 import org.sparta.dtos.WeatherDTO;
 
