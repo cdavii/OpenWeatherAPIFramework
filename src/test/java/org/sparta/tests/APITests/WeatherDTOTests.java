@@ -1,6 +1,7 @@
 package org.sparta.tests.APITests;
 
 import org.junit.jupiter.api.*;
+import org.sparta.ConnectionManager;
 import org.sparta.Injector;
 import org.sparta.dtos.WeatherDTO;
 
@@ -10,6 +11,8 @@ public class WeatherDTOTests {
 
     @BeforeEach
     void setup(){
+        ConnectionManager.buildCityNameUrl("London");
+        System.out.println(ConnectionManager.getConnection());
         weatherDTO = Injector.injectDTO(ConnectionManager.getConnection());
     }
 
