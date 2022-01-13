@@ -11,7 +11,7 @@ public class WeatherDTOTests {
 
     @BeforeEach
     void setup(){
-        ConnectionManager.buildCityNameUrl("London");
+        ConnectionManager.setCityNameQuery("London");
         weatherDTO = Injector.injectDTO(ConnectionManager.getConnection());
     }
 
