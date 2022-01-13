@@ -1,5 +1,7 @@
 package org.sparta;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.sparta.dtos.WeatherDTO;
+
 import java.io.IOException;
 import java.net.URL;
 
