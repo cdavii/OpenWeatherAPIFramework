@@ -30,7 +30,7 @@ public class ValueConverter {
         return (kelvin - 273.15) * 9.0/5.0 + 32;
     }
 
-    LocalDate makeDateFromEpoch(int epoch) {
+    public static LocalDate makeDateFromEpoch(int epoch) {
         return Instant.ofEpochSecond(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
