@@ -34,7 +34,7 @@ public class NumberChecker {
         @Test
         @DisplayName("Test that withinRange is false for numbers out of range")
         void testThatWithinRangeIsFalseForNumbersoutOfRange() {
-            Assertions.assertTrue(withinRange(14.24,91.782111,1000.1));
+            Assertions.assertFalse(withinRange(14.24,91.782111,1000.1));
         }
 
         @Test
