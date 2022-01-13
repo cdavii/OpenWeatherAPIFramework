@@ -1,4 +1,4 @@
-package org.sparta.tests.FrameworkTests;
+package org.sparta.tests.APITests;
 
 import org.junit.jupiter.api.*;
 import org.sparta.Config;
