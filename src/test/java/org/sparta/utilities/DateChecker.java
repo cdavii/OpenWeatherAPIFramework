@@ -59,8 +59,8 @@ public class DateChecker {
         }
 
         @Test
-        @DisplayName("Test that a week ago is not recent past")
-        void testThatAYearAgoIsNotRecentPast() {
+        @DisplayName("Test that two days ago is not recent past")
+        void testThatTwoDaysAgoIsNotRecentPast() {
             Assertions.assertFalse(isRecentPast(LocalDate.now().minusDays(2)));
         }
 
