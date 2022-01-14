@@ -1,8 +1,12 @@
 package org.sparta.utilities;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class WeatherChecker {
 
@@ -29,12 +33,17 @@ public class WeatherChecker {
         return false;
     }
 
+    /**
+     * Method to read inputs from a csv file of the accepted weather types for the api
+     * @return ArrayList the list of accepted weather types
+     */
     public static ArrayList<WeatherRecord> readWeatherTypes() {
         ArrayList<WeatherRecord> weatherTypes = new ArrayList<>();
 
-
         File file = new File("src/test/resources/WeatherTypes.csv");
         BufferedReader reader = null;
+
+        //Initialise the  reader
         try {
             reader = new BufferedReader(new FileReader(file));
         } catch (FileNotFoundException e) {
@@ -42,6 +51,7 @@ public class WeatherChecker {
         }
 
         String nextLine = null;
+        //Read the first line
         try {
             assert reader != null;
             nextLine = reader.readLine();
@@ -49,6 +59,7 @@ public class WeatherChecker {
             e.printStackTrace();
         }
 
+        //Until EOF, read the next line and add it to the collection
         while(!(nextLine == null)) {
             weatherTypes.add(new WeatherRecord(nextLine));
 
@@ -58,7 +69,23 @@ public class WeatherChecker {
                 e.printStackTrace();
             }
         }
-
         return weatherTypes;
+    }
+
+    @Nested
+    @DisplayName("Weather Checker Tests")
+    public class WeatherCheckerTests{
+
+            @Test
+            @DisplayName("Test that a valid weather condition returns true")
+            void testThatAValidWeatherConditionReturnsTrue() {
+                Assertions.assertTrue(isValid(301,"Drizzle","drizzle","09d"));
+            }
+
+            @Test
+            @DisplayName("Test that values from different conditions return false")
+            void testThatValuesFromDifferentConditionsReturnFalse() {
+                Assertions.assertFalse(isValid(200,"Drizzle","drizzle","09d"));
+            }
     }
 }
