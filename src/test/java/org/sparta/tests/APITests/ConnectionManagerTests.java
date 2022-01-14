@@ -22,7 +22,7 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check the city name URL is correct")
     void checkTheCityNameUrlIsCorrect() {
-        ConnectionManager.setQueryType("q=");
+        //ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         assumptionTestForConnection();
         Assertions.assertEquals(ConnectionManager.BASE_URL+ "q=London" + ConnectionManager.END_POINT, ConnectionManager.getCompleteUrl());
@@ -38,7 +38,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check that the country code URL is correct")
     void checkThatTheCountryCodeUrlIsCorrect() {
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         ConnectionManager.setCountryCodeQuery("uk");
         assumptionTestForConnection();
@@ -48,7 +47,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check that the city id URL is correct ")
     void checkThatTheCityIdUrlIsCorrect() {
-        ConnectionManager.setQueryType("id=");
         ConnectionManager.setCityIdQuery("2172797");
         assumptionTestForConnection();
         Assertions.assertEquals(ConnectionManager.BASE_URL + "id=2172797" + ConnectionManager.END_POINT, ConnectionManager.getConnection());
@@ -74,7 +72,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check metric parameter included in the URL")
     void checkMetricParameterIncludedInTheUrl() {
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         ConnectionManager.setMetricQuery(true);
         ConnectionManager.getConnection();
@@ -85,7 +82,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check imperial parameter included in the URL")
     void checkImperialParameterIncludedInTheUrl() {
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         ConnectionManager.setImperialQuery(true);
         ConnectionManager.getConnection();
@@ -96,7 +92,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check that the status code is 200")
     void checkThatTheStatusCodeIs200() {
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         ConnectionManager.getConnection();
         Assertions.assertEquals(STATUS_CODE_OK, ConnectionManager.getStatusCode());
@@ -112,7 +107,6 @@ public class ConnectionManagerTests {
     @Test
     @DisplayName("Check that the status code is 404")
     void checkThatTheStatusCodeIs404() {
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("rty");
         ConnectionManager.getConnection();
         Assertions.assertEquals(STATUS_CODE_NOT_FOUND, ConnectionManager.getStatusCode());
