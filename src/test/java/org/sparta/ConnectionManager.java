@@ -7,16 +7,15 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class ConnectionManager {
 
     public final static String END_POINT = "&appid=" + Config.getApiKey();
     public final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
-//    public static HashMap<String, String> expectedMap;
     private static String cityNameQuery = "";
     private static String stateCodeQuery = "";
     private static String countryCodeQuery = "";
@@ -252,9 +251,16 @@ public class ConnectionManager {
     }
 
     public static Boolean checkXCacheKeyContainsQueries() {
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        String latitudeQuery = String.valueOf(decimalFormat.format(Double.parseDouble(getLatitudeQuery().replaceAll("lat=", ""))));
+        String longitudeQuery = String.valueOf(decimalFormat.format(Double.parseDouble(getLongitudeQuery().replaceAll("&lon=", ""))));
+
         String queries = "?" + getCityNameQuery()  + getStateCodeQuery() + getZipCodeQuery() + getCountryCodeQuery() +
                 getCityIdQuery() +
-                getLatitudeQuery() + getLongitudeQuery() +
+                "lat=" + latitudeQuery + "&" +
+                "lon=" + longitudeQuery +
                 getMetricQuery() + getImperialQuery();
 
         String value = getConnectionHeaders().get("x-cache-key").get(0).replaceAll("/data/2.5/weather", "");
