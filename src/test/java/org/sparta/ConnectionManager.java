@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class ConnectionManager {
 
-    //Assumption that
     public final static String END_POINT = "&appid=" + Config.getApiKey();
     public final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
 //    public static HashMap<String, String> expectedMap;

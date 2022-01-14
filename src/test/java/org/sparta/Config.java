@@ -22,4 +22,6 @@ public class Config {
     public static String getApiKey(){
         return config.getProperty("API_KEY");
     }
+
+    public static String getWeatherCodes() {return "src/test/resources/WeatherTypes.csv";}
 }
