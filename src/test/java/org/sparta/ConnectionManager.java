@@ -3,15 +3,18 @@ package org.sparta;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
 
 public class ConnectionManager {
 
     //Assumption that
     public final static String END_POINT = "&appid=" + Config.getApiKey();
     public final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
-    private static String queryType = "";
+    public static Map<String, String> expectedMap;
     private static String cityNameQuery = "";
     private static String stateCodeQuery = "";
     private static String countryCodeQuery = "";
@@ -24,18 +27,6 @@ public class ConnectionManager {
     private static String languageQuery = "";
     private static String completeUrl = "";
 
-    public static String getQueryType() {
-        return queryType;
-    }
-
-    public static void setQueryType(String queryType) {
-        if (queryType.equals("")) {
-            ConnectionManager.queryType = "";
-        } else {
-            ConnectionManager.queryType = queryType;
-        }
-    }
-
     public static String getCityNameQuery() {
         return cityNameQuery;
     }
@@ -44,7 +35,7 @@ public class ConnectionManager {
         if (cityNameQuery.equals("")) {
             ConnectionManager.cityNameQuery = "";
         } else {
-            ConnectionManager.cityNameQuery = cityNameQuery;
+            ConnectionManager.cityNameQuery = "q=" + cityNameQuery;
         }
     }
 
@@ -80,7 +71,7 @@ public class ConnectionManager {
         if (cityIdQuery.equals("")) {
             ConnectionManager.cityIdQuery = "";
         } else {
-            ConnectionManager.cityIdQuery = cityIdQuery;
+            ConnectionManager.cityIdQuery = "id=" + cityIdQuery;
         }
     }
 
@@ -162,7 +153,7 @@ public class ConnectionManager {
     }
 
     public static void setCompleteUrl() {
-        ConnectionManager.completeUrl = BASE_URL + getQueryType() +
+        ConnectionManager.completeUrl = BASE_URL +
                 getCityNameQuery()  + getStateCodeQuery() + getZipCodeQuery() + getCountryCodeQuery() +
                 getCityIdQuery() +
                 getLatitudeQuery() + getLongitudeQuery() +
@@ -176,7 +167,6 @@ public class ConnectionManager {
     }
 
     public static void resetUrlBuilders() {
-        setQueryType("");
         setCityIdQuery("");
         setCityNameQuery("");
         setLatitudeQuery("");
@@ -195,7 +185,7 @@ public class ConnectionManager {
         return getCompleteUrl();
     }
 
-    private static HttpResponse<String> getConnectionResponse() {
+    public static HttpResponse<String> getConnectionResponse() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(getCompleteUrl()))
@@ -208,4 +198,23 @@ public class ConnectionManager {
         }
         return response;
     }
+
+    public static Map<String, List<String>> getConnectionHeaders() {
+        HttpHeaders headers = getConnectionResponse().headers();
+        return headers.map();
+    }
+
+    public static void generateExpectedMap() {
+        expectedMap.put("server", "openresty");
+        expectedMap.put("access-control-allow-methods", "GET, SET");
+        expectedMap.put("access-control-allow-credentials", "true");
+        expectedMap.put("access-control-allow-origin", "*");
+        expectedMap.put("connection", "keep-alive");
+        expectedMap.put("content-type", "application/json; charset=utf-8");
+        expectedMap.put("x-cache-key",getCityNameQuery()  + getStateCodeQuery() + getZipCodeQuery() + getCountryCodeQuery() +
+                getCityIdQuery() +
+                getLatitudeQuery() + getLongitudeQuery() +
+                getMetricQuery() + getImperialQuery());
+    }
+
 }
