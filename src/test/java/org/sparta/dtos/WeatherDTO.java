@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WeatherDTO{
 
 	@JsonProperty("coord")
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Coord coord;
 
 	@JsonProperty("weather")
