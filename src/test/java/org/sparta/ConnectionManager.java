@@ -6,7 +6,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ConnectionManager {
@@ -14,7 +17,7 @@ public class ConnectionManager {
     //Assumption that
     public final static String END_POINT = "&appid=" + Config.getApiKey();
     public final static String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?";
-    public static Map<String, String> expectedMap;
+//    public static HashMap<String, String> expectedMap;
     private static String cityNameQuery = "";
     private static String stateCodeQuery = "";
     private static String countryCodeQuery = "";
@@ -204,7 +207,8 @@ public class ConnectionManager {
         return headers.map();
     }
 
-    public static void generateExpectedMap() {
+    public static HashMap<String, String> getExpectedMap() {
+        HashMap<String, String> expectedMap = new HashMap<>();
         expectedMap.put("server", "openresty");
         expectedMap.put("access-control-allow-methods", "GET, SET");
         expectedMap.put("access-control-allow-credentials", "true");
@@ -215,6 +219,53 @@ public class ConnectionManager {
                 getCityIdQuery() +
                 getLatitudeQuery() + getLongitudeQuery() +
                 getMetricQuery() + getImperialQuery());
+        return expectedMap;
+    }
+
+    public static Boolean checkServer(String value) {
+        return getConnectionHeaders().get("server").get(0).equals(value);
+    }
+    public static Boolean checkAccessControllAllowMethods(String value) {
+        return getConnectionHeaders().get("access-control-allow-methods").get(0).contains(value);
+    }
+
+    public static Boolean checkAccessControlAllowCredentials(){
+        return Boolean.parseBoolean(getConnectionHeaders().get("access-control-allow-credentials").get(0));
+    }
+
+    public static Boolean checkAccessControlAllowOrigin(String value){
+        return getConnectionHeaders().get("access-control-allow-origin").get(0).equals(value);
+    }
+
+    public static Boolean checkBodyLengthInUtfEight() {
+        int responseLength = getConnectionResponse().body().getBytes(StandardCharsets.UTF_8).length;
+        int contentLength = Integer.parseInt(getConnectionHeaders().get("content-length").get(0));
+
+        return responseLength == contentLength;
+    }
+
+    public static Boolean checkConnection(String value) {
+        return getConnectionHeaders().get("connection").get(0).equals(value);
+    }
+
+    public static Boolean checkContentType(String value) {
+        return getConnectionHeaders().get("content-type").get(0).equals(value);
+    }
+
+    public static Boolean checkXCacheKeyContainsQueries() {
+        String queries = "?" + getCityNameQuery()  + getStateCodeQuery() + getZipCodeQuery() + getCountryCodeQuery() +
+                getCityIdQuery() +
+                getLatitudeQuery() + getLongitudeQuery() +
+                getMetricQuery() + getImperialQuery();
+
+        String value = getConnectionHeaders().get("x-cache-key").get(0).replaceAll("/data/2.5/weather", "");
+
+        return queries.toLowerCase().contains(value.toLowerCase());
+    }
+
+    public static Boolean checkAgainstExpectedMap(String value) {
+        return getConnectionHeaders().get(value.toLowerCase()).get(0).equals(getExpectedMap().get(value.toLowerCase()));
+
     }
 
 }

@@ -11,6 +11,8 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -94,5 +96,17 @@ public class HeaderTests {
         // The .contains block in this would contain the relevant getters used by connectionManager for building the URL
         Assertions.assertTrue(headerMap.get("x-cache-key").get(0).contains("/data/2.5/weather?q=london,uk&units=metric"));
     }
+
+//    @Test
+//    @DisplayName("Check that date in header is in recent past")
+//    void checkThatDateInHeaderIsInRecentPast() {
+//        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss O");
+//        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("Fri, 14 Jan 2022 11:09:57 GMT");
+//        String text = headerMap.get("date").get(0);
+//        LocalDate parsedDate = LocalDate.parse(text, DateTimeFormatter.RFC_1123_DATE_TIME);
+//
+//        System.out.println(parsedDate.isBefore(LocalDate.now()));
+//
+//    }
 
 }
