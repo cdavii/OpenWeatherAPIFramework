@@ -16,58 +16,58 @@ public class WeatherDTO{
 	private List<WeatherItem> weather;
 
 	@JsonProperty("base")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String base;
 
 	@JsonProperty("main")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Main main;
 
 	@JsonProperty("visibility")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Integer visibility;
 
 	@JsonProperty("wind")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Wind wind;
 
 	@JsonProperty("rain")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Rain rain;
 
 	@JsonProperty("snow")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Snow snow;
 
 	@JsonProperty("clouds")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Clouds clouds;
 
 	@JsonProperty("dt")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Integer dt;
 
 	@JsonProperty("sys")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Sys sys;
 
 	@JsonProperty("timezone")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Integer timezone;
 
 	@JsonProperty("id")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Integer id;
 
 	@JsonProperty("name")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String name;
 
 	@JsonProperty("cod")
 	private Integer cod;
 
 	@JsonProperty("message")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String message;
 
 	public Coord getCoord() {
