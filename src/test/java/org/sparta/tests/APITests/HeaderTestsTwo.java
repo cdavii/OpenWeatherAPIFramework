@@ -12,7 +12,10 @@ public class HeaderTestsTwo {
     @BeforeAll
     static void setupAll(TestInfo testInfo) {
         System.out.println("Executing: " + testInfo.getClass());
-        setCityNameQuery("London");
+        //setCityNameQuery("Tokyo");
+        //setCityIdQuery("1850144");
+        setLongitudeQuery("139.6917");
+        setLatitudeQuery("35.6895");
         getConnection();
         Map<String, List<String>> headerMap = getConnectionHeaders();
         Map<String, String> expectedMap = getExpectedMap();
