@@ -3,6 +3,7 @@ package org.sparta.dtos;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WeatherDTO{
@@ -11,7 +12,7 @@ public class WeatherDTO{
 	private Coord coord;
 
 	@JsonProperty("weather")
-	@JsonIgnore
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<WeatherItem> weather;
 
 	@JsonProperty("base")
