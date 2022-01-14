@@ -5,6 +5,10 @@ import org.sparta.ConnectionManager;
 import org.sparta.Injector;
 import org.sparta.dtos.WeatherDTO;
 import org.sparta.utilities.CollectionChecker;
+import org.sparta.utilities.NumberChecker;
+import org.sparta.utilities.WeatherChecker;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class WeatherDTOTests {
@@ -12,7 +16,6 @@ public class WeatherDTOTests {
 
     @BeforeEach
     void setup(){
-        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         weatherDTO = Injector.injectDTO(ConnectionManager.getConnection());
     }
@@ -47,5 +50,40 @@ public class WeatherDTOTests {
         void testThatEachTypeOfWeatherAppearsOnlyOnceInTheList() {
             Assertions.assertFalse(CollectionChecker.containsDuplicates(weatherDTO.getWeather()));
         }
+
+        @Test
+        @DisplayName("Test that the weatherItem object is in the table of weather types")
+        void testThatTheWeatherItemObjectIsInTheTableOfWeatherTypes() {
+            int wCode = weatherDTO.getWeather().get(0).getId();
+            String wKeyWord = weatherDTO.getWeather().get(0).getMain();
+            String wDescription = weatherDTO.getWeather().get(0).getDescription();
+            String wIcon = weatherDTO.getWeather().get(0).getIcon();
+
+            Assertions.assertTrue(WeatherChecker.isValid(wCode,wKeyWord,wDescription,wIcon));
+        }
+    }
+
+    @Test
+    @DisplayName("Test that visibility is positive")
+    void testThatVisibilityIsPositive() {
+        Assertions.assertTrue(NumberChecker.isPositive(weatherDTO.getVisibility()));
+    }
+
+    @Nested
+    @DisplayName("Snow Tests")
+    class SnowTests{
+
+        @Test
+        @DisplayName("Test that snowfall for last 3h is in acceptable range")
+        void testThatSnowfallForLast3HIsInAcceptableRange() {
+            Assertions.assertTrue(NumberChecker.withinRange(0, 6000, weatherDTO.getSnow().getLastThreeHours()));
+        }
+
+        @Test
+        @DisplayName("Test that snowfall for last hour is in acceptable range")
+        void testThatSnowfallForLastHourIsInAcceptableRange() {
+            Assertions.assertTrue(NumberChecker.withinRange(0,2000,weatherDTO.getSnow().getLastHour()));
+        }
+
     }
 }
