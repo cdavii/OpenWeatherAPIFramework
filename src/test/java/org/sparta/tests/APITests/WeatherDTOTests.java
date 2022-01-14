@@ -66,7 +66,7 @@ public class WeatherDTOTests {
     @Test
     @DisplayName("Test that visibility is positive")
     void testThatVisibilityIsPositive() {
-        Assertions.assertTrue(weatherDTO.getVisibility() >= 0);
+        Assertions.assertTrue(NumberChecker.isPositive(weatherDTO.getVisibility()));
     }
 
     @Nested
