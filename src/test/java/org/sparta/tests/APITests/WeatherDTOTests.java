@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.sparta.ConnectionManager;
 import org.sparta.Injector;
 import org.sparta.dtos.WeatherDTO;
+import org.sparta.utilities.CollectionChecker;
 
 
 public class WeatherDTOTests {
@@ -11,6 +12,7 @@ public class WeatherDTOTests {
 
     @BeforeEach
     void setup(){
+        ConnectionManager.setQueryType("q=");
         ConnectionManager.setCityNameQuery("London");
         weatherDTO = Injector.injectDTO(ConnectionManager.getConnection());
     }
@@ -28,6 +30,22 @@ public class WeatherDTOTests {
         @DisplayName("Latitude Range Test")
         void latitudeRangeTest() {
             Assertions.assertTrue(weatherDTO.getCoord().getLat() <= 90 && weatherDTO.getCoord().getLat() >= -90);
+        }
+    }
+
+    @Nested
+    @DisplayName("WeatherItem Tests")
+    class WeatherItemTests {
+        @Test
+        @DisplayName("Test that there is at least one weather type")
+        void testThatThereIsAtLeastOneWeatherType() {
+            Assertions.assertFalse(weatherDTO.getWeather().isEmpty());
+        }
+
+        @Test
+        @DisplayName("Test that each type of weather appears only once in the list")
+        void testThatEachTypeOfWeatherAppearsOnlyOnceInTheList() {
+            Assertions.assertFalse(CollectionChecker.containsDuplicates(weatherDTO.getWeather()));
         }
     }
 }
